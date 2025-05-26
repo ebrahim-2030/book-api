@@ -2,6 +2,7 @@
 require("dotenv").config();
 const express = require("express");
 const connectToDB = require("./database/db.js");
+const bookRouter = require("./routes/book-routes.js");
 
 const app = express();
 
@@ -13,6 +14,9 @@ connectToDB(DB_URI);
 
 // parse incoming JSON requests
 app.use(express.json());
+
+// register book-related routes under the /api/books
+app.use("/api/books", bookRouter);
 
 // start express server and listen on defined port
 app.listen(PORT, () => {
