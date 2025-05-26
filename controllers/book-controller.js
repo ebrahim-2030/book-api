@@ -37,7 +37,7 @@ const getSingleBook = async (req, res) => {
 
     // return 404 if book not found
     if (!foundBook) {
-      res.status(404).json({
+      return res.status(404).json({
         success: false,
         message: "Book not found with the given ID",
       });
@@ -49,7 +49,6 @@ const getSingleBook = async (req, res) => {
       message: "Book found successfylly",
       data: foundBook,
     });
-    
   } catch (err) {
     // log error and send back failure response
     console.error("Get single book error ->", err);
@@ -89,7 +88,41 @@ const addBook = async (req, res) => {
 
 // update an existing book by id
 const updateBook = async (req, res) => {
-  // todo: implement updateBook logic
+  try {
+    // extract book-id from route parameters
+    const bookId = req.params.id;
+
+    // get updated form data from the request body
+    const updateBookData = req.body;
+
+    // update book document, return updated version and run validators
+    const updatedBook = await Book.findByIdAndUpdate(bookId, updateBookData, {
+      new: true,
+      runValidators: true,
+    });
+
+    // return 404 if book not found
+    if (!updatedBook) {
+      return res.status(404).json({
+        success: false,
+        message: "Book not found with the given id",
+      });
+    }
+
+    // send success response, if book updated
+    res.status(200).json({
+      success: true,
+      message: "Book updated successfully",
+      data: updatedBook,
+    });
+  } catch (err) {
+    // log error and send back failure response
+    console.error("Update book error ->", err.message);
+    res.send(500).json({
+      success: false,
+      message: "Couldn't update the book",
+    });
+  }
 };
 
 // delete a book by id
