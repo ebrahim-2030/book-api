@@ -28,7 +28,36 @@ const getAllBooks = async (req, res) => {
 
 // get a single book by id
 const getSingleBook = async (req, res) => {
-  // todo: implement getSingleBook logic
+  try {
+    // extract book-id from route parameters
+    const bookId = req.params.id;
+
+    // find book by id in the database
+    const foundBook = await Book.findById(bookId);
+
+    // return 404 if book not found
+    if (!foundBook) {
+      res.status(404).json({
+        success: false,
+        message: "Book not found with the given ID",
+      });
+    }
+
+    // send success response, if book found
+    res.status(200).json({
+      success: true,
+      message: "Book found successfylly",
+      data: foundBook,
+    });
+    
+  } catch (err) {
+    // log error and send back failure response
+    console.error("Get single book error ->", err);
+    res.status(500).json({
+      success: false,
+      message: "Couldnt' fetch the book",
+    });
+  }
 };
 
 // add a new book to the database
