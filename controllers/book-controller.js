@@ -1,4 +1,5 @@
 // import Book model
+const book = require("../../../../NodeJS/NodeJS Sangam/chapter-7/2.bookstore-api/models/book.js");
 const Book = require("../models/Book.js");
 const { all } = require("../routes/book-routes.js");
 
@@ -46,7 +47,7 @@ const getSingleBook = async (req, res) => {
     // send success response, if book found
     res.status(200).json({
       success: true,
-      message: "Book found successfylly",
+      message: "Book found successfully",
       data: foundBook,
     });
   } catch (err) {
@@ -118,7 +119,7 @@ const updateBook = async (req, res) => {
   } catch (err) {
     // log error and send back failure response
     console.error("Update book error ->", err.message);
-    res.send(500).json({
+    res.status(500).json({
       success: false,
       message: "Couldn't update the book",
     });
@@ -127,7 +128,35 @@ const updateBook = async (req, res) => {
 
 // delete a book by id
 const deleteBook = async (req, res) => {
-  // todo: implement deleteBook logic
+  try {
+    // extract book-id from route parameters
+    const bookId = req.params.id;
+
+    // delete the book document form the database
+    const deletedBook = await Book.findByIdAndDelete(bookId);
+
+    // return 404, if book not found
+    if (!deletedBook) {
+      return res.status(404).json({
+        success: false,
+        message: "Book not found with given id",
+      });
+    }
+
+    // send success response, if book deleted
+    res.status(200).json({
+      success: true,
+      message: "Book deleted successfully",
+      data: deletedBook,
+    });
+  } catch (err) {
+    // log error and send back failure response
+    console.error("Delete book error ->", err.message);
+    res.status(500).json({
+      success: false,
+      message: "Couldn't delete the book",
+    });
+  }
 };
 
 module.exports = {
