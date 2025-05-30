@@ -18,6 +18,7 @@ A simple RESTful API for managing a collection of books. Built using **Node.js**
 - Mongoose
 - Nodemon
 - dotenv
+- Postman
 
 ## 📦 Installation
 

@@ -18,7 +18,7 @@ app.use(express.json());
 // register book-related routes under the /api/books
 app.use("/api/books", bookRouter);
 
-// start express server and listen on defined port
+// run the server on port 3000
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });

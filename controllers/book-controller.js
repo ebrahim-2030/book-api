@@ -1,7 +1,5 @@
 // import Book model
-const book = require("../../../../NodeJS/NodeJS Sangam/chapter-7/2.bookstore-api/models/book.js");
 const Book = require("../models/Book.js");
-const { all } = require("../routes/book-routes.js");
 
 // get all books from the database
 const getAllBooks = async (req, res) => {
