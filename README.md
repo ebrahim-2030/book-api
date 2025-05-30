@@ -1,6 +1,8 @@
 # 📚 Book API
 
-A simple RESTful API for managing a collection of books. Built using **Node.js**, **Express.js**, and **MongoDB**.
+A RESTful API for managing a collection of books. Built using Node.js, Express.js, and MongoDB.
+This project does not include a frontend interface — it is intended to serve as a backend service.
+All routes have been thoroughly tested using Postman.
 
 ## 🚀 Features
 
